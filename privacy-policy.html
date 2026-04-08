@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Josy</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 800px; margin: 40px auto; padding: 0 24px; color: #1a1a1a; line-height: 1.7; }
+    h1 { font-size: 2rem; margin-bottom: 0.25rem; }
+    h2 { font-size: 1.25rem; margin-top: 2rem; }
+    p, li { color: #333; }
+    a { color: #2563eb; }
+    .updated { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated: March 29, 2026</p>
+
+  <p>This Privacy Policy describes how Josy ("we", "our", or "us") collects, uses, and protects your information when you use the Josy Chrome extension and associated backend service.</p>
+
+  <h2>1. Information We Collect</h2>
+  <ul>
+    <li><strong>Account information:</strong> Your email address and name via Google OAuth login (managed by Supabase Auth).</li>
+    <li><strong>CV / Resume data:</strong> The text content of CV files you upload (PDF or DOCX). This is stored securely in Supabase Storage and used solely to perform job description matching.</li>
+    <li><strong>Job description text:</strong> Text you select on job listing pages is sent to our API for AI-powered matching. This text is cached temporarily (up to 7 days) via an anonymized hash to reduce redundant API calls.</li>
+    <li><strong>Application tracking data:</strong> Job title, company name, and URL captured when you click Apply on a job page. This data is written directly to your own Google Sheet — we do not store it on our servers.</li>
+    <li><strong>Payment information:</strong> Payments are processed by LemonSqueezy and PayOS. We do not store your card details. We receive and store transaction records (amount, date, credit granted) for credit balance management.</li>
+    <li><strong>Usage data:</strong> Credit balance, transaction history, and basic usage logs for billing and support purposes.</li>
+  </ul>
+
+  <h2>2. How We Use Your Information</h2>
+  <ul>
+    <li>To authenticate you and maintain your session.</li>
+    <li>To match your CV against job descriptions using AI.</li>
+    <li>To manage your credit balance and process payments.</li>
+    <li>To set up and write to your Google Sheet job tracker.</li>
+    <li>To improve the reliability and quality of the service.</li>
+  </ul>
+
+  <h2>3. Data Storage and Security</h2>
+  <p>Your data is stored on Supabase (PostgreSQL database and file storage), hosted on AWS infrastructure. CV files are stored in Supabase Storage with access restricted to your account. All data in transit is encrypted via HTTPS/TLS.</p>
+
+  <h2>4. Third-Party Services</h2>
+  <ul>
+    <li><strong>Supabase</strong> — authentication, database, and file storage. <a href="https://supabase.com/privacy" target="_blank">Privacy Policy</a></li>
+    <li><strong>Google OAuth &amp; Google Sheets API</strong> — login and job tracking. <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a></li>
+    <li><strong>LemonSqueezy</strong> — payment processing. <a href="https://www.lemonsqueezy.com/privacy" target="_blank">Privacy Policy</a></li>
+    <li><strong>PayOS</strong> — Vietnamese payment gateway. Their privacy policy governs payment data.</li>
+    <li><strong>Google Gemini / OpenAI</strong> — AI matching via LiteLLM proxy. Job description text and CV summaries are sent to these providers for analysis. Inputs are not used to train their models under our API agreements.</li>
+  </ul>
+
+  <h2>5. Data Retention</h2>
+  <p>Your CV files and profile data are retained as long as your account is active. Cached match results are retained for up to 7 days. You may request deletion of your account and all associated data by contacting us.</p>
+
+  <h2>6. Your Rights</h2>
+  <p>You may request access to, correction of, or deletion of your personal data at any time by contacting us at the email below. We will respond within 30 days.</p>
+
+  <h2>7. Children's Privacy</h2>
+  <p>Josy is not directed at children under 13. We do not knowingly collect personal information from children.</p>
+
+  <h2>8. Changes to This Policy</h2>
+  <p>We may update this Privacy Policy from time to time. We will notify you of significant changes by updating the "Last updated" date above.</p>
+
+  <h2>9. Contact</h2>
+  <p>If you have any questions about this Privacy Policy, please contact us at: <a href="mailto:support@josy.app">support@josy.app</a></p>
+</body>
+</html>
