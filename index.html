@@ -1,0 +1,2156 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Josy | Elite AI Career Concierge</title>
+    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#EC6223",
+              "primary-container": "#EC6223",
+              "primary-fixed": "#ffdbc9",
+              "on-primary": "#ffffff",
+              "on-background": "#1c1c19",
+              "on-surface": "#1c1c19",
+              "on-surface-variant": "#564338",
+              surface: "#fcf9f4",
+              "surface-container": "#f0ede9",
+              "surface-container-low": "#f6f3ee",
+              "surface-container-high": "#ebe8e3",
+              "surface-container-highest": "#e5e2dd",
+              "surface-container-lowest": "#ffffff",
+              secondary: "#5f5e5e",
+              tertiary: "#00677f",
+              outline: "#897266",
+              "outline-variant": "#ddc1b3",
+              "inverse-surface": "#31302d",
+            },
+            fontFamily: {
+              headline: ["Plus Jakarta Sans", "sans-serif"],
+              body: ["Plus Jakarta Sans", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection {
+        background: #ffdbc9;
+        color: #331200;
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+      }
+
+      /* Ticker */
+      .ticker-wrap {
+        overflow: hidden;
+      }
+      .ticker {
+        display: flex;
+        white-space: nowrap;
+      }
+      @keyframes ticker-scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+      .ticker {
+        animation: ticker-scroll 38s linear infinite;
+      }
+
+      /* Reveal */
+      .reveal {
+        opacity: 0;
+        transform: translateY(26px);
+        transition:
+          opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .d1 {
+        transition-delay: 0.1s;
+      }
+      .d2 {
+        transition-delay: 0.2s;
+      }
+      .d3 {
+        transition-delay: 0.3s;
+      }
+      .d4 {
+        transition-delay: 0.4s;
+      }
+      .d5 {
+        transition-delay: 0.5s;
+      }
+
+      /* Navbar */
+      #navbar {
+        transition:
+          background 0.3s,
+          box-shadow 0.3s;
+      }
+      #navbar.scrolled {
+        background: rgba(252, 249, 244, 0.92) !important;
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 1px 16px rgba(0, 0, 0, 0.07);
+      }
+
+      /* Nav links */
+      .nav-link {
+        color: rgba(28, 28, 25, 0.65);
+        transition: color 0.2s;
+      }
+      .nav-link:hover {
+        color: #ec6223;
+      }
+      .nav-active {
+        color: #ec6223;
+        font-weight: 600;
+        border-bottom: 2px solid #ec6223;
+        padding-bottom: 2px;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px rgba(236, 98, 35, 0.26) !important;
+      }
+      .btn-primary:active {
+        transform: translateY(0);
+      }
+      .btn-ghost {
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .btn-ghost:hover {
+        background: #ebe8e3;
+      }
+      .btn-ghost:active {
+        transform: scale(0.98);
+      }
+
+      /* Pulse dot */
+      @keyframes pulseDot {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+      .pulse-dot {
+        animation: pulseDot 2s ease-in-out infinite;
+      }
+
+      /* Progress bar */
+      @keyframes growBar {
+        from {
+          width: 0;
+        }
+        to {
+          width: 94%;
+        }
+      }
+      .progress-bar {
+        animation: growBar 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.9s both;
+      }
+
+      /* Feature cards */
+      .feature-card {
+        transition:
+          background 0.3s,
+          transform 0.3s,
+          box-shadow 0.3s;
+        cursor: default;
+      }
+      .feature-card:hover {
+        background: #ec6223 !important;
+        transform: translateY(-6px);
+        box-shadow: 0 28px 56px rgba(236, 98, 35, 0.22);
+      }
+      .feature-card:hover .fc-icon {
+        background: rgba(255, 255, 255, 0.18) !important;
+        color: #fff;
+      }
+      .feature-card:hover .fc-title {
+        color: #ffffff;
+      }
+      .feature-card:hover .fc-desc {
+        color: rgba(255, 255, 255, 0.78);
+      }
+      .fc-icon {
+        transition:
+          background 0.3s,
+          color 0.3s;
+      }
+      .fc-title,
+      .fc-desc {
+        transition: color 0.3s;
+      }
+
+      /* Tracking rows */
+      .track-row {
+        transition: background 0.15s;
+      }
+      .track-row:hover {
+        background: rgba(240, 237, 233, 0.65) !important;
+      }
+
+      /* CTA form swap */
+      #cta-success {
+        display: none;
+      }
+      #cta-form-wrap.done #cta-form {
+        display: none;
+      }
+      #cta-form-wrap.done #cta-success {
+        display: inline-flex;
+      }
+
+      /* Blob */
+      .blob {
+        pointer-events: none;
+        position: absolute;
+        border-radius: 9999px;
+        filter: blur(80px);
+      }
+
+      /* Resize the hero image frame on mobile */
+      @media (max-width: 640px) {
+        .hero-frame {
+          aspect-ratio: 4/3;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-surface text-on-surface">
+    <!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+    <header id="navbar" class="sticky top-0 z-50 bg-surface">
+      <div
+        class="flex justify-between items-center px-6 md:px-8 py-4 max-w-7xl mx-auto"
+      >
+        <div class="select-none">
+          <img src="logo.png" alt="Josy" class="h-10 w-auto" />
+        </div>
+
+        <nav
+          id="desktop-nav"
+          class="hidden md:flex items-center gap-10 text-[15px] tracking-tight font-medium"
+        >
+          <a href="#features" class="nav-link" data-nav="features">Features</a>
+          <a href="#how-it-works" class="nav-link" data-nav="how-it-works"
+            >How it works</a
+          >
+          <a href="#about" class="nav-link" data-nav="about">About</a>
+          <a href="#pricing" class="nav-link" data-nav="pricing">Pricing</a>
+          <a href="apps/extension/public/privacy-policy.html" class="nav-link"
+            >Privacy</a
+          >
+        </nav>
+
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            onclick="
+              window.open(
+                'https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad',
+                '_blank'
+              )
+            "
+            class="btn-primary bg-primary text-white px-5 py-2.5 rounded-lg font-semibold text-sm"
+            style="box-shadow: 0 4px 14px rgba(236, 98, 35, 0.24)"
+          >
+            Install now
+          </button>
+          <!-- Mobile hamburger -->
+          <button
+            type="button"
+            id="mobile-menu-btn"
+            class="md:hidden flex flex-col gap-1.5 p-1"
+            aria-label="Open menu"
+          >
+            <span class="w-5 h-0.5 bg-on-surface block transition-all"></span>
+            <span class="w-5 h-0.5 bg-on-surface block transition-all"></span>
+            <span class="w-5 h-0.5 bg-on-surface block transition-all"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile nav drawer -->
+      <div
+        id="mobile-nav"
+        class="hidden md:hidden flex-col gap-1 pb-4 px-6 border-t border-outline-variant/20"
+      >
+        <a
+          href="#features"
+          class="nav-link block py-3 text-base font-medium border-b border-outline-variant/10"
+          >Features</a
+        >
+        <a
+          href="#how-it-works"
+          class="nav-link block py-3 text-base font-medium border-b border-outline-variant/10"
+          >How it works</a
+        >
+        <a
+          href="#pricing"
+          class="nav-link block py-3 text-base font-medium border-b border-outline-variant/10"
+          >Pricing</a
+        >
+        <a
+          href="#about"
+          class="nav-link block py-3 text-base font-medium border-b border-outline-variant/10"
+          >About</a
+        >
+        <a
+          href="apps/extension/public/privacy-policy.html"
+          class="nav-link block py-3 text-base font-medium"
+          >Privacy</a
+        >
+      </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+    <section id="hero" class="relative pt-20 pb-32 overflow-hidden">
+      <div
+        class="blob"
+        style="
+          width: 500px;
+          height: 500px;
+          top: -130px;
+          right: -130px;
+          background: rgba(236, 98, 35, 0.07);
+        "
+      ></div>
+      <div
+        class="blob"
+        style="
+          width: 400px;
+          height: 400px;
+          bottom: -80px;
+          left: -80px;
+          background: rgba(0, 103, 127, 0.05);
+        "
+      ></div>
+
+      <div
+        class="max-w-7xl mx-auto px-6 md:px-8 grid lg:grid-cols-2 gap-16 items-center"
+        id="cta-install"
+      >
+        <!-- Copy -->
+        <div class="z-10">
+          <h1
+            class="reveal d1 font-extrabold tracking-tighter text-on-surface leading-[0.95] mb-8 font-headline"
+            style="font-size: clamp(3rem, 6vw, 4.5rem)"
+          >
+            Stop Guessing.<br />
+            <span class="text-primary">Start Landing.</span>
+          </h1>
+
+          <p
+            class="reveal d2 text-xl text-secondary mb-10 leading-relaxed max-w-xl"
+          >
+            Josy scores every job against your resume in seconds — so you only
+            apply where you have a real shot, and know exactly how to close the
+            gap.
+          </p>
+
+          <div class="reveal d3 flex flex-col sm:flex-row gap-4 mb-12">
+            <a
+              href="https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-primary bg-primary text-white px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3"
+              style="box-shadow: 0 16px 32px rgba(236, 98, 35, 0.22)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                viewBox="0 0 256 223"
+              >
+                <defs>
+                  <linearGradient
+                    id="logosChromeWebStore0"
+                    x1="0%"
+                    x2="100%"
+                    y1="50%"
+                    y2="50%"
+                  >
+                    <stop offset="0%" stop-color="#D93025" />
+                    <stop offset="100%" stop-color="#EA4335" />
+                  </linearGradient>
+                  <linearGradient
+                    id="logosChromeWebStore1"
+                    x1="74.943%"
+                    x2="19.813%"
+                    y1="95.826%"
+                    y2="-4.161%"
+                  >
+                    <stop offset="0%" stop-color="#1E8E3E" />
+                    <stop offset="100%" stop-color="#34A853" />
+                  </linearGradient>
+                  <linearGradient
+                    id="logosChromeWebStore2"
+                    x1="59.898%"
+                    x2="21.416%"
+                    y1="-.134%"
+                    y2="99.86%"
+                  >
+                    <stop offset="0%" stop-color="#FBBC04" />
+                    <stop offset="100%" stop-color="#FCC934" />
+                  </linearGradient>
+                  <path
+                    id="logosChromeWebStore3"
+                    d="M255.983 0H0v204.837c0 9.633 7.814 17.464 17.464 17.464h221.072c9.633 0 17.464-7.814 17.464-17.464L255.983 0Z"
+                  />
+                </defs>
+                <path
+                  fill="#F1F3F4"
+                  d="M255.983 0H0v204.837c0 9.633 7.814 17.464 17.464 17.464h221.072c9.633 0 17.464-7.814 17.464-17.464L255.983 0Z"
+                />
+                <path fill="#E8EAED" d="M0 0h255.983v111.74H0z" />
+                <path
+                  fill="#FFF"
+                  d="M157.076 47.727H98.907A11.63 11.63 0 0 1 87.27 36.09a11.63 11.63 0 0 1 11.637-11.637h58.169a11.63 11.63 0 0 1 11.637 11.637c0 6.417-5.204 11.637-11.637 11.637Z"
+                />
+                <mask id="logosChromeWebStore4" fill="#fff">
+                  <use href="#logosChromeWebStore3" />
+                </mask>
+                <g mask="url(#logosChromeWebStore4)">
+                  <g transform="translate(17.455 94.293)">
+                    <path
+                      fill="url(#logosChromeWebStore0)"
+                      d="m14.812 55.255l15.241 46.498l32.638 36.427l47.845-82.908l95.724-.017C187.146 22.213 151.443 0 110.536 0C69.63 0 33.926 22.213 14.812 55.255Z"
+                    />
+                    <path
+                      fill="url(#logosChromeWebStore1)"
+                      d="m110.52 221.105l32.637-36.443l15.224-46.482H62.674L14.812 55.255c-19.047 33.076-20.445 75.128.017 110.561c20.445 35.434 57.545 55.256 95.69 55.29Z"
+                    />
+                    <path
+                      fill="url(#logosChromeWebStore2)"
+                      d="M206.26 55.272h-95.724l47.862 82.908l-47.862 82.925c38.162-.033 75.263-19.855 95.708-55.289c20.461-35.433 19.064-77.468.016-110.544Z"
+                    />
+                    <ellipse
+                      cx="110.536"
+                      cy="110.544"
+                      fill="#F1F3F4"
+                      rx="55.255"
+                      ry="55.272"
+                    />
+                    <ellipse
+                      cx="110.536"
+                      cy="110.544"
+                      fill="#1A73E8"
+                      rx="44.898"
+                      ry="44.915"
+                    />
+                  </g>
+                </g>
+                <path
+                  fill="#BDC1C6"
+                  d="M0 111.74h255.983v1.448H0zm0-1.465h255.983v1.448H0z"
+                  opacity=".1"
+                />
+              </svg>
+              Install Free on Chrome
+            </a>
+            <!-- <button
+              type="button"
+              class="btn-ghost bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-3"
+            >
+              <svg viewBox="0 0 24 24" class="w-5 h-5 shrink-0" fill="none">
+                <path
+                  d="M21.86 14.48C21.4 15.82 20.56 17 19.44 17.9a8.68 8.68 0 0 1-5.27 1.77c-3.93 0-7.1-2.63-7.1-5.88 0-.19.01-.38.04-.57-2.15.97-3.6 3.04-3.6 5.34C3.51 22.02 7.46 24 12 24c6.63 0 12-5.37 12-12a12 12 0 0 0-.14-1.52z"
+                  fill="#0078D4"
+                />
+                <path
+                  d="M12 2C6.48 2 2 6.48 2 12c0 1.69.44 3.27 1.2 4.66.06-.42.22-.82.45-1.18C5.07 13.33 7.54 12 10.26 12c2.57 0 4.85 1.18 6.36 3.02C17.75 12.87 18.5 10 18.5 7c0-2.76-2.24-5-5-5H12z"
+                  fill="#50E6FF"
+                />
+              </svg>
+              Install Free on Edge
+            </button> -->
+          </div>
+
+          <div class="reveal d4 pt-8 border-t border-outline-variant/30">
+            <p
+              class="text-xs font-bold uppercase tracking-widest text-outline mb-5"
+            >
+              Trusted by candidates at global leaders
+            </p>
+            <div class="flex flex-wrap gap-8" style="opacity: 0.3">
+              <span class="font-extrabold text-xl tracking-tighter"
+                >Google</span
+              >
+              <span class="font-extrabold text-xl tracking-tighter">Meta</span>
+              <span class="font-extrabold text-xl tracking-tighter"
+                >Airbnb</span
+              >
+              <span class="font-extrabold text-xl tracking-tighter"
+                >Amazon</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Mockup -->
+        <div
+          class="reveal d2 relative lg:h-[600px] flex items-center justify-center"
+        >
+          <div
+            class="blob"
+            style="
+              width: 260px;
+              height: 260px;
+              top: -40px;
+              right: -40px;
+              background: rgba(236, 98, 35, 0.09);
+            "
+          ></div>
+          <div
+            class="blob"
+            style="
+              width: 260px;
+              height: 260px;
+              bottom: -40px;
+              left: -40px;
+              background: rgba(0, 103, 127, 0.08);
+            "
+          ></div>
+
+          <img
+            src="JOSY_2.png"
+            alt="Josy analyzing a Lead Mobile Engineer job on DevFinder"
+            class="w-full h-full object-cover rounded-2xl shadow-2xl border border-outline-variant/20"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     CAROUSEL
+═══════════════════════════════════════════ -->
+    <section
+      class="py-10 border-y border-outline-variant/20 ticker-wrap"
+      style="background: #f6f3ee"
+    >
+      <div class="ticker">
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >LinkedIn</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Indeed</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >TopCV</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >ITviec</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Glassdoor</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Monster</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >ZipRecruiter</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >AngelList</span
+        >
+        <!-- duplicate for seamless loop -->
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >LinkedIn</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Indeed</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >TopCV</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >ITviec</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Glassdoor</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >Monster</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >ZipRecruiter</span
+        >
+        <span
+          class="text-2xl font-extrabold tracking-tight mx-10 shrink-0"
+          style="color: rgba(28, 28, 25, 0.18)"
+          >AngelList</span
+        >
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     TRACKING SECTION
+═══════════════════════════════════════════ -->
+    <section id="how-it-works" class="py-32 bg-surface">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="grid lg:grid-cols-2 gap-20 items-center">
+          <!-- How it works image -->
+          <div class="reveal order-2 lg:order-1">
+            <img
+              src="JOSY_1.png"
+              alt="How Josy works — 4 step guide"
+              class="w-full rounded-2xl shadow-2xl border border-outline-variant/20 transition-shadow duration-300 hover:shadow-[0_32px_64px_rgba(0,0,0,0.12)]"
+            />
+          </div>
+
+          <!-- Copy -->
+          <div class="order-1 lg:order-2">
+            <h2
+              class="reveal font-extrabold tracking-tighter mb-6 font-headline leading-none"
+              style="font-size: clamp(2.5rem, 4vw, 3.5rem)"
+            >
+              Your Entire Job Hunt.
+              <span class="text-primary">One Spreadsheet.</span>
+            </h2>
+            <p class="reveal d1 text-xl text-secondary mb-10 leading-relaxed">
+              Never lose track of a role again. One click from the Josy
+              extension sidebar instantly logs the job title, company, and
+              details straight into your personal Google Sheet — no
+              copy-pasting, no forgotten tabs.
+            </p>
+            <div class="space-y-5">
+              <div class="reveal d2 flex items-start gap-4">
+                <div
+                  class="mt-0.5 w-9 h-9 rounded-full flex items-center justify-center text-primary shrink-0"
+                  style="background: rgba(236, 98, 35, 0.1)"
+                >
+                  <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+                    <path
+                      d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-on-surface mb-0.5">
+                    Auto-Extraction
+                  </h4>
+                  <p class="text-sm text-secondary">
+                    Salaries, descriptions, and hiring managers pulled
+                    automatically.
+                  </p>
+                </div>
+              </div>
+              <div class="reveal d3 flex items-start gap-4">
+                <div
+                  class="mt-0.5 w-9 h-9 rounded-full flex items-center justify-center text-primary shrink-0"
+                  style="background: rgba(236, 98, 35, 0.1)"
+                >
+                  <svg viewBox="0 0 24 24" class="w-5 h-5 fill-current">
+                    <path
+                      d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 1.5L18.5 9H13V3.5zM6 20V4h5v7h7v9H6z"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h4 class="font-bold text-on-surface mb-0.5">
+                    Google Sheets Native
+                  </h4>
+                  <p class="text-sm text-secondary">
+                    Connect your existing sheet or use our premium template.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════════ -->
+    <section id="features" class="py-32" style="background: #f6f3ee">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <!-- Section header -->
+        <div class="text-center mb-24">
+          <span
+            class="reveal inline-block text-xs font-bold uppercase tracking-widest text-primary mb-4 px-3 py-1 rounded-full"
+            style="background: rgba(236, 98, 35, 0.1)"
+            >Core Features</span
+          >
+          <h2
+            class="reveal font-extrabold tracking-tighter mb-5 font-headline"
+            style="font-size: clamp(2.5rem, 4vw, 3.5rem)"
+          >
+            Three features.<br />One smarter job search.
+          </h2>
+          <p class="reveal d1 text-xl text-secondary max-w-2xl mx-auto">
+            Josy gives you the clarity, confidence, and materials to land the
+            roles you actually want.
+          </p>
+        </div>
+
+        <!-- ── Feature 1: Analyse ── -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+          <!-- Visual -->
+          <div class="reveal order-2 lg:order-1">
+            <div
+              class="bg-white rounded-3xl shadow-xl p-6 border border-outline-variant/20 space-y-4"
+            >
+              <!-- Header -->
+              <div
+                class="flex items-center justify-between pb-4 border-b border-outline-variant/15"
+              >
+                <div class="flex items-center gap-2.5">
+                  <div
+                    class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-xs"
+                  >
+                    J
+                  </div>
+                  <span class="font-bold text-sm text-on-surface"
+                    >JD Analysis — Frontend Developer</span
+                  >
+                </div>
+                <span
+                  class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full text-primary"
+                  style="background: rgba(236, 98, 35, 0.1)"
+                  >Complete</span
+                >
+              </div>
+              <!-- Matched skills -->
+              <div>
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-2.5"
+                >
+                  ✓ Matched Skills
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-green-700"
+                    style="background: #dcfce7"
+                    >React</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-green-700"
+                    style="background: #dcfce7"
+                    >TypeScript</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-green-700"
+                    style="background: #dcfce7"
+                    >REST API</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-green-700"
+                    style="background: #dcfce7"
+                    >Git</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-green-700"
+                    style="background: #dcfce7"
+                    >Node.js</span
+                  >
+                </div>
+              </div>
+              <!-- Required missing -->
+              <div>
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-2.5"
+                >
+                  ✗ Required — Missing
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-red-700"
+                    style="background: #fee2e2"
+                    >GraphQL</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-red-700"
+                    style="background: #fee2e2"
+                    >Docker</span
+                  >
+                </div>
+              </div>
+              <!-- Nice to have -->
+              <div>
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-2.5"
+                >
+                  △ Nice to Have — Missing
+                </p>
+                <div class="flex flex-wrap gap-2">
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-yellow-700"
+                    style="background: #fef9c3"
+                    >AWS</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-yellow-700"
+                    style="background: #fef9c3"
+                    >CI/CD</span
+                  >
+                  <span
+                    class="text-xs font-semibold px-2.5 py-1 rounded-full text-yellow-700"
+                    style="background: #fef9c3"
+                    >Redis</span
+                  >
+                </div>
+              </div>
+              <!-- How to close the gap -->
+              <div class="pt-3 border-t border-outline-variant/15">
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-3"
+                >
+                  💡 How to Close the Gap
+                </p>
+                <ol class="space-y-2.5">
+                  <li
+                    class="flex gap-2.5 text-xs text-on-surface-variant leading-relaxed"
+                  >
+                    <span
+                      class="shrink-0 w-5 h-5 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[10px]"
+                      >1</span
+                    >
+                    Highlight your REST API work as equivalent GraphQL
+                    experience — describe the data-fetching patterns you own.
+                  </li>
+                  <li
+                    class="flex gap-2.5 text-xs text-on-surface-variant leading-relaxed"
+                  >
+                    <span
+                      class="shrink-0 w-5 h-5 rounded-full bg-primary text-white font-bold flex items-center justify-center text-[10px]"
+                      >2</span
+                    >
+                    Add a line about Docker usage in local dev or CI pipelines —
+                    even basic familiarity closes this gap.
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Copy -->
+          <div class="order-1 lg:order-2 space-y-6">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary px-3 py-1 rounded-full"
+              style="background: rgba(236, 98, 35, 0.1)"
+            >
+              <span>01</span><span>·</span><span>Analyse</span>
+            </div>
+            <h3
+              class="reveal font-extrabold tracking-tighter text-on-surface font-headline leading-tight"
+              style="font-size: clamp(2rem, 3vw, 2.75rem)"
+            >
+              Instantly decode<br />any job description.
+            </h3>
+            <p class="reveal text-lg text-secondary leading-relaxed">
+              Paste or highlight any JD and Josy dissects it in seconds —
+              separating required skills from nice-to-haves, identifying exact
+              gaps in your profile, and flagging what the recruiter actually
+              cares about.
+            </p>
+            <ul class="reveal space-y-3">
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Breaks down
+                  <strong class="text-on-surface">required</strong> vs
+                  <strong class="text-on-surface">nice-to-have</strong> skills
+                  at a glance</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Detects hidden requirements buried in role descriptions</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Gives you specific, actionable tips to close each gap</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Works on LinkedIn, Indeed, ITviec, Glassdoor, and 8+ more
+                  boards</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ── Feature 2: Matching ── -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center mb-32">
+          <!-- Copy -->
+          <div class="space-y-6">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary px-3 py-1 rounded-full"
+              style="background: rgba(236, 98, 35, 0.1)"
+            >
+              <span>02</span><span>·</span><span>Matching</span>
+            </div>
+            <h3
+              class="reveal font-extrabold tracking-tighter text-on-surface font-headline leading-tight"
+              style="font-size: clamp(2rem, 3vw, 2.75rem)"
+            >
+              Know your score<br />before you apply.
+            </h3>
+            <p class="reveal text-lg text-secondary leading-relaxed">
+              Josy calculates a precise match score by weighing your skills and
+              experience against the exact requirements of the role — so you
+              only invest time in applications where you have a real shot.
+            </p>
+            <ul class="reveal space-y-3">
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  ><strong class="text-on-surface">0–100 match score</strong>
+                  weighted by skill importance (required skills count 80%)</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Cached results — re-analyse instantly with no extra
+                  credit</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Supports multiple CV versions — switch active CV
+                  anytime</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >One-click from any job listing — no copy-paste workflow</span
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Visual -->
+          <div class="reveal">
+            <div
+              class="bg-white rounded-3xl shadow-xl p-6 border border-outline-variant/20"
+            >
+              <!-- Score card -->
+              <div
+                class="flex items-center gap-5 pb-5 border-b border-outline-variant/15"
+              >
+                <div
+                  class="shrink-0 w-24 h-24 rounded-full flex items-center justify-center text-white font-extrabold text-3xl shadow-lg"
+                  style="background: linear-gradient(135deg, #16a34a, #15803d)"
+                >
+                  85
+                </div>
+                <div>
+                  <p
+                    class="text-xs font-bold uppercase tracking-widest text-outline mb-1"
+                  >
+                    Match Score
+                  </p>
+                  <p class="text-xl font-extrabold text-on-surface mb-1">
+                    Strong Fit
+                  </p>
+                  <p class="text-sm text-secondary leading-relaxed">
+                    You meet most requirements. A few targeted tweaks could push
+                    this to 95+.
+                  </p>
+                </div>
+              </div>
+              <!-- Skills breakdown -->
+              <div class="pt-5 space-y-3">
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1.5">
+                    <span class="text-on-surface">Required Skills</span>
+                    <span class="text-green-700">8 / 10 matched</span>
+                  </div>
+                  <div
+                    class="h-2 w-full rounded-full overflow-hidden"
+                    style="background: #f0ede9"
+                  >
+                    <div
+                      class="h-full rounded-full"
+                      style="
+                        width: 80%;
+                        background: linear-gradient(90deg, #16a34a, #22c55e);
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1.5">
+                    <span class="text-on-surface">Nice-to-Have Skills</span>
+                    <span class="text-yellow-700">3 / 6 matched</span>
+                  </div>
+                  <div
+                    class="h-2 w-full rounded-full overflow-hidden"
+                    style="background: #f0ede9"
+                  >
+                    <div
+                      class="h-full rounded-full"
+                      style="
+                        width: 50%;
+                        background: linear-gradient(90deg, #d97706, #f59e0b);
+                      "
+                    ></div>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex justify-between text-xs font-bold mb-1.5">
+                    <span class="text-on-surface">Experience Match</span>
+                    <span class="text-primary">High</span>
+                  </div>
+                  <div
+                    class="h-2 w-full rounded-full overflow-hidden"
+                    style="background: #f0ede9"
+                  >
+                    <div
+                      class="h-full rounded-full"
+                      style="
+                        width: 90%;
+                        background: linear-gradient(90deg, #ec6223, #f87435);
+                      "
+                    ></div>
+                  </div>
+                </div>
+              </div>
+              <!-- Summary -->
+              <div
+                class="mt-5 p-4 rounded-2xl text-sm text-on-surface-variant leading-relaxed italic"
+                style="background: #f6f3ee"
+              >
+                "You are a strong fit. Your React + TypeScript depth directly
+                matches the role. Highlight your experience writing technical
+                specifications to address the remaining gap."
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Feature 3: Tailor CV ── -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <!-- Visual -->
+          <div class="reveal order-2 lg:order-1">
+            <div
+              class="bg-white rounded-3xl shadow-xl p-6 border border-outline-variant/20 space-y-5"
+            >
+              <!-- Header -->
+              <div class="pb-4 border-b border-outline-variant/15">
+                <p class="text-base font-bold text-on-surface mb-0.5">
+                  Generate a Tailored CV
+                </p>
+                <p class="text-xs text-secondary">
+                  AI-rewritten to match this job description · 2 credits per
+                  generation
+                </p>
+              </div>
+              <!-- Template selector -->
+              <div>
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-2"
+                >
+                  CV Template
+                </p>
+                <div class="grid grid-cols-3 gap-2">
+                  <div
+                    class="border-2 border-primary rounded-xl p-3 text-center cursor-pointer"
+                    style="background: rgba(236, 98, 35, 0.06)"
+                  >
+                    <div
+                      class="w-full h-8 rounded-md mb-1.5 flex flex-col gap-0.5 px-1 pt-1"
+                      style="background: #f0ede9"
+                    >
+                      <div class="h-1 rounded bg-outline/30 w-3/4"></div>
+                      <div class="h-0.5 rounded bg-outline/20 w-1/2"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-primary">Modern</p>
+                  </div>
+                  <div
+                    class="border border-outline-variant/30 rounded-xl p-3 text-center cursor-pointer hover:border-primary/40"
+                  >
+                    <div
+                      class="w-full h-8 rounded-md mb-1.5 flex flex-col gap-0.5 px-1 pt-1"
+                      style="background: #f0ede9"
+                    >
+                      <div class="h-1 rounded bg-outline/30 w-full"></div>
+                      <div class="h-0.5 rounded bg-outline/20 w-2/3"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-outline">Classic</p>
+                  </div>
+                  <div
+                    class="border border-outline-variant/30 rounded-xl p-3 text-center cursor-pointer hover:border-primary/40"
+                  >
+                    <div
+                      class="w-full h-8 rounded-md mb-1.5 flex flex-col gap-0.5 px-1 pt-1"
+                      style="background: #f0ede9"
+                    >
+                      <div
+                        class="h-0.5 rounded bg-outline/20 w-1/2 mt-1 mx-auto"
+                      ></div>
+                      <div class="h-0.5 rounded bg-outline/15 w-full"></div>
+                    </div>
+                    <p class="text-[10px] font-bold text-outline">Minimal</p>
+                  </div>
+                </div>
+              </div>
+              <!-- Photo upload -->
+              <div>
+                <p
+                  class="text-[11px] font-bold uppercase tracking-widest text-outline mb-2"
+                >
+                  Photo
+                  <span class="font-normal normal-case text-outline/60"
+                    >(optional)</span
+                  >
+                </p>
+                <div class="flex items-center gap-3">
+                  <div
+                    class="px-3 py-1.5 rounded-lg text-xs font-semibold text-on-surface border border-outline-variant/30 cursor-pointer hover:bg-surface-container"
+                    style="background: #f6f3ee"
+                  >
+                    Choose photo
+                  </div>
+                  <span class="text-xs text-outline">No file chosen</span>
+                </div>
+                <p class="text-[10px] text-outline mt-1">
+                  JPEG or PNG · max 500 KB
+                </p>
+              </div>
+              <!-- CTA -->
+              <button
+                class="w-full py-3.5 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2"
+                style="
+                  background: #ec6223;
+                  box-shadow: 0 8px 24px rgba(236, 98, 35, 0.35);
+                "
+              >
+                <span>✦</span> Generate Tailored CV
+                <span class="opacity-75 text-xs">(2 credits)</span>
+              </button>
+              <!-- Score requirement note -->
+              <p class="text-center text-xs text-secondary">
+                Available when your match score is 70 or above.
+              </p>
+            </div>
+          </div>
+
+          <!-- Copy -->
+          <div class="order-1 lg:order-2 space-y-6">
+            <div
+              class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary px-3 py-1 rounded-full"
+              style="background: rgba(236, 98, 35, 0.1)"
+            >
+              <span>03</span><span>·</span><span>Tailor CV</span>
+            </div>
+            <h3
+              class="reveal font-extrabold tracking-tighter text-on-surface font-headline leading-tight"
+              style="font-size: clamp(2rem, 3vw, 2.75rem)"
+            >
+              Your CV, rewritten<br />for the role.
+            </h3>
+            <p class="reveal text-lg text-secondary leading-relaxed">
+              When your match score hits 70+, Josy rewrites your CV to speak the
+              exact language of the job description — emphasising your most
+              relevant experience, skills, and achievements — and exports a
+              polished PDF ready to send.
+            </p>
+            <ul class="reveal space-y-3">
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >AI rewrites your bullet points to
+                  <strong class="text-on-surface"
+                    >mirror the JD's exact keywords</strong
+                  ></span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Choose from
+                  <strong class="text-on-surface"
+                    >Modern, Classic, or Minimal</strong
+                  >
+                  PDF templates</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  >Add a photo for roles that expect it (modern template)</span
+                >
+              </li>
+              <li class="flex items-start gap-3 text-on-surface-variant">
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-5 h-5 fill-current text-primary shrink-0 mt-0.5"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                <span
+                  ><strong class="text-on-surface"
+                    >Skill integrity enforced</strong
+                  >
+                  — AI never invents skills you don't have</span
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     TESTIMONIALS
+═══════════════════════════════════════════ -->
+    <section id="about" class="py-32 bg-surface">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="reveal font-extrabold tracking-tighter mb-4 font-headline"
+            style="font-size: clamp(2rem, 4vw, 3rem)"
+          >
+            Loved by job seekers worldwide
+          </h2>
+          <p class="reveal d1 text-lg text-secondary">
+            Real results from real people who stopped guessing and started
+            landing.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Testimonial 1 -->
+          <div
+            class="reveal d1 bg-white rounded-3xl p-8 border border-outline-variant/20 shadow-sm flex flex-col"
+          >
+            <div class="flex gap-1 mb-5">
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+            </div>
+            <p class="text-on-surface leading-relaxed mb-6 flex-1">
+              "Josy turned my chaotic job hunt into a focused strategy. I
+              stopped applying to everything and started landing
+              <strong class="text-primary">3x more interviews.</strong>"
+            </p>
+            <div
+              class="flex items-center gap-3 mt-auto pt-5 border-t border-outline-variant/15"
+            >
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white select-none shrink-0"
+                style="background: linear-gradient(135deg, #ec6223, #c45a00)"
+              >
+                MT
+              </div>
+              <div>
+                <p class="font-bold text-sm text-on-surface">Marcus Thorne</p>
+                <p class="text-xs text-outline">Senior PM · Spotify</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div
+            class="reveal d2 bg-white rounded-3xl p-8 border border-outline-variant/20 shadow-sm flex flex-col"
+          >
+            <div class="flex gap-1 mb-5">
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+            </div>
+            <p class="text-on-surface leading-relaxed mb-6 flex-1">
+              "I used to spend hours tailoring every application blindly. Josy
+              shows me in seconds if a role is worth my time — and exactly what
+              to fix in my CV.
+              <strong class="text-primary">Got an offer in 3 weeks.</strong>"
+            </p>
+            <div
+              class="flex items-center gap-3 mt-auto pt-5 border-t border-outline-variant/15"
+            >
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white select-none shrink-0"
+                style="background: linear-gradient(135deg, #00677f, #009abc)"
+              >
+                SL
+              </div>
+              <div>
+                <p class="font-bold text-sm text-on-surface">Sophie Laurent</p>
+                <p class="text-xs text-outline">UX Designer · Figma</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonial 3 -->
+          <div
+            class="reveal d3 bg-white rounded-3xl p-8 border border-outline-variant/20 shadow-sm flex flex-col"
+          >
+            <div class="flex gap-1 mb-5">
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+              <svg
+                viewBox="0 0 20 20"
+                class="w-4 h-4 fill-current text-primary"
+                style="opacity: 0.9"
+                aria-hidden="true"
+              >
+                <path
+                  d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+                />
+              </svg>
+            </div>
+            <p class="text-on-surface leading-relaxed mb-6 flex-1">
+              "The Google Sheets tracker alone is worth it — every application
+              is automatically logged, no effort. But the match scoring is what
+              sets Josy apart.
+              <strong class="text-primary"
+                >I only apply to roles I can actually win.</strong
+              >"
+            </p>
+            <div
+              class="flex items-center gap-3 mt-auto pt-5 border-t border-outline-variant/15"
+            >
+              <div
+                class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm text-white select-none shrink-0"
+                style="background: linear-gradient(135deg, #3b3b3b, #666)"
+              >
+                DN
+              </div>
+              <div>
+                <p class="font-bold text-sm text-on-surface">David Nguyen</p>
+                <p class="text-xs text-outline">Software Engineer · Shopify</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     PRICING
+═══════════════════════════════════════════ -->
+    <section id="pricing" class="py-32" style="background: #f6f3ee">
+      <div class="max-w-7xl mx-auto px-6 md:px-8">
+        <div class="text-center mb-16">
+          <h2
+            class="reveal font-extrabold tracking-tighter mb-4 font-headline"
+            style="font-size: clamp(2rem, 4vw, 3rem)"
+          >
+            Simple, credit-based pricing
+          </h2>
+          <p class="reveal d1 text-lg text-secondary max-w-xl mx-auto">
+            Pay only for what you use. No subscriptions. Credits never expire.
+          </p>
+        </div>
+
+        <p class="reveal d1 text-center text-sm text-secondary mb-10">
+          Each CV match costs 1 credit (cached results are free).
+        </p>
+
+        <div class="grid md:grid-cols-4 gap-6 items-center">
+          <!-- Free -->
+          <div
+            class="reveal d1 bg-white rounded-3xl p-8 flex flex-col border border-outline-variant/20 shadow-sm"
+          >
+            <p
+              class="text-xs font-bold uppercase tracking-widest text-outline mb-3"
+            >
+              Free
+            </p>
+            <div class="flex items-end gap-1 mb-1">
+              <span
+                class="font-extrabold tracking-tighter text-on-surface"
+                style="font-size: 2.75rem; line-height: 1"
+                >5</span
+              >
+              <span class="text-sm mb-2 text-secondary"> credits</span>
+            </div>
+            <p class="text-2xl font-bold text-on-surface mb-6">$0</p>
+            <ul class="space-y-2.5 mb-8 flex-1">
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-primary shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                5 AI match analyses
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-primary shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Google Sheets tracker
+              </li>
+              <li class="flex items-center gap-2 text-sm text-outline">
+                <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current shrink-0">
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                Resume gap suggestions
+              </li>
+            </ul>
+            <button
+              type="button"
+              onclick="
+                window.open(
+                  'https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad',
+                  '_blank'
+                )
+              "
+              class="w-full py-3.5 rounded-xl font-semibold text-sm text-on-surface border border-outline-variant/30 transition-colors hover:bg-surface-container-high"
+            >
+              Get Started Free
+            </button>
+          </div>
+
+          <!-- Starter -->
+          <div
+            class="reveal d1 rounded-3xl p-8 flex flex-col"
+            style="
+              background: #ec6223;
+              box-shadow: 0 16px 40px rgba(236, 98, 35, 0.28);
+            "
+          >
+            <p
+              class="text-xs font-bold uppercase tracking-widest mb-3"
+              style="color: rgba(255, 255, 255, 0.65)"
+            >
+              Starter
+            </p>
+            <div class="flex items-end gap-1 mb-1">
+              <span
+                class="font-extrabold tracking-tighter text-white"
+                style="font-size: 2.75rem; line-height: 1"
+                >30</span
+              >
+              <span
+                class="text-sm mb-2"
+                style="color: rgba(255, 255, 255, 0.65)"
+              >
+                credits</span
+              >
+            </div>
+            <p class="text-2xl font-bold text-white mb-6">$5.99</p>
+            <ul class="space-y-2.5 mb-8 flex-1">
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                30 AI match analyses
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Google Sheets tracker
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Credits never expire
+              </li>
+            </ul>
+            <button
+              type="button"
+              class="w-full py-3.5 rounded-xl font-bold text-sm text-white transition-colors"
+              style="
+                background: rgba(255, 255, 255, 0.2);
+                border: 1.5px solid rgba(255, 255, 255, 0.35);
+              "
+              onclick="
+                window.open(
+                  'https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad',
+                  '_blank'
+                )
+              "
+            >
+              Buy Starter
+            </button>
+          </div>
+
+          <!-- Growth — BEST VALUE -->
+          <div
+            class="reveal d2 bg-white rounded-3xl p-8 flex flex-col relative overflow-hidden"
+            style="
+              border: 2.5px solid #ec6223;
+              box-shadow: 0 24px 60px rgba(236, 98, 35, 0.22);
+              transform: scale(1.04);
+            "
+          >
+            <div
+              class="absolute top-5 right-5 text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full text-white"
+              style="background: #f59e0b"
+            >
+              Best Value
+            </div>
+            <p
+              class="text-xs font-bold uppercase tracking-widest mb-3"
+              style="color: #ec6223"
+            >
+              Growth
+            </p>
+            <div class="flex items-end gap-1 mb-1">
+              <span
+                class="font-extrabold tracking-tighter"
+                style="font-size: 2.75rem; line-height: 1; color: #ec6223"
+                >100</span
+              >
+              <span class="text-sm mb-2 text-secondary"> credits</span>
+            </div>
+            <p class="text-2xl font-bold mb-6" style="color: #1c1c19">$12.99</p>
+            <ul class="space-y-2.5 mb-8 flex-1">
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current shrink-0"
+                  style="color: #ec6223"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                100 AI match analyses
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current shrink-0"
+                  style="color: #ec6223"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Google Sheets tracker
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current shrink-0"
+                  style="color: #ec6223"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Resume gap suggestions
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm text-on-surface-variant"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current shrink-0"
+                  style="color: #ec6223"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Credits never expire
+              </li>
+            </ul>
+            <button
+              type="button"
+              class="w-full py-3.5 rounded-xl font-bold text-sm text-white transition-opacity hover:opacity-90"
+              style="
+                background: #ec6223;
+                box-shadow: 0 8px 24px rgba(236, 98, 35, 0.4);
+              "
+              onclick="
+                window.open(
+                  'https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad',
+                  '_blank'
+                )
+              "
+            >
+              Buy Growth
+            </button>
+          </div>
+
+          <!-- Pro -->
+          <div
+            class="reveal d3 rounded-3xl p-8 flex flex-col"
+            style="
+              background: #ec6223;
+              box-shadow: 0 16px 40px rgba(236, 98, 35, 0.28);
+            "
+          >
+            <p
+              class="text-xs font-bold uppercase tracking-widest mb-3"
+              style="color: rgba(255, 255, 255, 0.65)"
+            >
+              Pro
+            </p>
+            <div class="flex items-end gap-1 mb-1">
+              <span
+                class="font-extrabold tracking-tighter text-white"
+                style="font-size: 2.75rem; line-height: 1"
+                >250</span
+              >
+              <span
+                class="text-sm mb-2"
+                style="color: rgba(255, 255, 255, 0.65)"
+              >
+                credits</span
+              >
+            </div>
+            <p class="text-2xl font-bold text-white mb-6">$24.99</p>
+            <ul class="space-y-2.5 mb-8 flex-1">
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                250 AI match analyses
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Google Sheets tracker
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Resume gap suggestions
+              </li>
+              <li
+                class="flex items-center gap-2 text-sm"
+                style="color: rgba(255, 255, 255, 0.8)"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="w-4 h-4 fill-current text-white shrink-0"
+                >
+                  <path
+                    d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+                  />
+                </svg>
+                Priority support
+              </li>
+            </ul>
+            <button
+              type="button"
+              class="w-full py-3.5 rounded-xl font-bold text-sm text-white transition-colors"
+              style="
+                background: rgba(255, 255, 255, 0.2);
+                border: 1.5px solid rgba(255, 255, 255, 0.35);
+              "
+              onclick="
+                window.open(
+                  'https://chromewebstore.google.com/detail/josy/pofgeiepennchklnpobhkbejnmgiapad',
+                  '_blank'
+                )
+              "
+            >
+              Buy Pro
+            </button>
+          </div>
+        </div>
+
+        <p class="text-center text-sm text-outline mt-10">
+          All prices in USD · Credits never expire
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+    <footer class="py-12 bg-surface border-t border-outline-variant/20">
+      <div
+        class="flex flex-col md:flex-row justify-between items-center px-6 md:px-8 max-w-7xl mx-auto gap-6"
+      >
+        <div>
+          <div
+            class="text-lg font-extrabold tracking-tighter text-on-surface font-headline mb-1"
+          >
+            Josy
+          </div>
+          <p class="text-sm text-outline">
+            © <span id="footer-year"></span> Josy AI Career Extension. All
+            rights reserved.
+          </p>
+        </div>
+        <nav class="flex gap-8">
+          <a
+            href="apps/extension/public/privacy-policy.html"
+            class="text-sm text-outline transition-colors duration-200 hover:text-primary"
+            >Privacy Policy</a
+          >
+          <a
+            href="#"
+            class="text-sm text-outline transition-colors duration-200 hover:text-primary"
+            >Terms of Service</a
+          >
+          <a
+            href="#"
+            class="text-sm text-outline transition-colors duration-200 hover:text-primary"
+            >Contact</a
+          >
+        </nav>
+      </div>
+    </footer>
+
+    <!-- ═══════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════ -->
+    <script>
+      // ── Navbar scroll effect
+      const navbar = document.getElementById("navbar");
+      window.addEventListener(
+        "scroll",
+        () => {
+          navbar.classList.toggle("scrolled", window.scrollY > 12);
+        },
+        { passive: true }
+      );
+
+      // ── Scroll reveal
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -36px 0px" }
+      );
+
+      document
+        .querySelectorAll(".reveal")
+        .forEach((el) => revealObserver.observe(el));
+
+      // ── Hero — stagger in immediately on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        const heroEls = document.querySelectorAll("#hero .reveal");
+        heroEls.forEach((el, i) => {
+          setTimeout(() => el.classList.add("visible"), 80 + i * 130);
+        });
+      });
+
+      // ── Scrollspy — update active nav link based on scroll position
+      const navSections = ["features", "how-it-works", "pricing", "about"];
+      const scrollspyObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              document.querySelectorAll("[data-nav]").forEach((link) => {
+                const isActive = link.dataset.nav === entry.target.id;
+                link.classList.toggle("nav-active", isActive);
+                link.classList.toggle("nav-link", !isActive);
+              });
+            }
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      navSections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) scrollspyObserver.observe(el);
+      });
+
+      // ── Mobile menu toggle
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mobileNav = document.getElementById("mobile-nav");
+      mobileMenuBtn.addEventListener("click", () => {
+        const isOpen = !mobileNav.classList.contains("hidden");
+        mobileNav.classList.toggle("hidden", isOpen);
+        mobileNav.classList.toggle("flex", !isOpen);
+      });
+      // Close mobile menu when a link is clicked
+      mobileNav.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileNav.classList.add("hidden");
+          mobileNav.classList.remove("flex");
+        });
+      });
+
+      // ── CTA email focus styling
+      const emailInput = document.getElementById("cta-email");
+      emailInput.addEventListener("focus", () => {
+        emailInput.style.background = "rgba(255,255,255,0.16)";
+        emailInput.style.boxShadow = "0 0 0 2px #EC6223";
+      });
+      emailInput.addEventListener("blur", () => {
+        emailInput.style.background = "rgba(255,255,255,0.10)";
+        emailInput.style.boxShadow = "none";
+      });
+      emailInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") handleCTASubmit();
+      });
+
+      // ── CTA submit
+      function handleCTASubmit() {
+        const val = emailInput.value.trim();
+        if (!val || !val.includes("@")) {
+          emailInput.focus();
+          return;
+        }
+        document.getElementById("cta-form-wrap").classList.add("done");
+      }
+    </script>
+    <script>
+      document.getElementById("footer-year").textContent =
+        new Date().getFullYear();
+    </script>
+  </body>
+</html>
